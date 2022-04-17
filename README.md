@@ -1,6 +1,18 @@
 # Event-Management-System-API
 Event management which involes CRUD operation with authentication and authorization
 
+USER :
+- Register User
+- Login / Logout User
+- Change Password, Reset and Update Password
+
+EVENT : 
+- Create event
+- Update event
+- Invite user for a event
+- Get event details [Pagination, Sorting, Search Filter, Date Filter]
+- See your created event and event in which you are invited
+
 create your .env file and insert the following
 
 MONGODB_URI = your mongodb connect uri
