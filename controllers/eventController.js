@@ -80,10 +80,10 @@ const getEventDetails = async (req, res, next) => {
       count = 2;
     }
     if (sort === 'asc' || !sort) {
-      type = -1;
+      type = 1;
     }
     if (sort === 'des') {
-      type = 1;
+      type = -1;
     }
     const limit = parseInt(count);
     const skip = (page - 1) * count;
@@ -116,9 +116,12 @@ const eventUpdate = async (req, res, next) => {
     const eventId = req.body.eventId;
     const eventName = req.body.eventName;
     const eventDate = req.body.eventDate;
-    const isDateValid = moment(eventDate, 'DD/MM/YYYY', true).isValid();
-    if (!isDateValid) {
-      throw next(createError.BadRequest('Invalid Date'));
+
+    if (eventDate) {
+      const isDateValid = moment(eventDate, 'DD/MM/YYYY', true).isValid();
+      if (!isDateValid) {
+        throw next(createError.BadRequest('Invalid Date'));
+      }
     }
     const eventPurpose = req.body.eventPurpose;
 

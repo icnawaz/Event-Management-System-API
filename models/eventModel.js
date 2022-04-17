@@ -55,7 +55,7 @@ class Event {
     const result = await db
       .collection('events')
       .find({}, { limit: limit, skip: skip })
-      .sort({ eventDate: type });
+      .sort({ eventName: type });
 
     if (search) {
       result.filter({ eventName: search.toUpperCase() });
@@ -70,15 +70,40 @@ class Event {
 
   async updateEvent({ eventId, eventName, eventDate, eventPurpose }) {
     const db = getDb();
-    const demo = await this.getEventById(eventId);
+
+    const eventResult = await this.getEventById(eventId);
 
     db.collection('events').updateOne(
       { _id: new ObjectId(eventId) },
       {
         $set: {
-          eventName: eventName.toUpperCase() || demo.eventName,
-          eventDate: eventDate || demo.eventDate,
-          eventPurpose: eventPurpose || demo.eventPurpose,
+          eventName: eventName.toUpperCase() || eventResult.eventName,
+          eventDate: eventDate || eventResult.eventDate,
+          eventPurpose: eventPurpose || eventResult.eventPurpose,
+        },
+      }
+    );
+
+    db.collection('users').updateOne(
+      { 'createdEvent.eventId': eventId },
+      {
+        $set: {
+          'createdEvent.$.eventName':
+            eventName.toUpperCase() || eventResult.eventName,
+          'createdEvent.$.eventDate': eventDate || eventResult.eventDate,
+          'createdEvent.$.eventPurpose':
+            eventPurpose || eventResult.eventPurpose,
+          'createdEvent.$.eventId': eventId,
+        },
+      }
+    );
+
+    db.collection('users').updateMany(
+      { 'invitedEvent.eventId': eventId },
+      {
+        $set: {
+          'invitedEvent.$.eventName':
+            eventName.toUpperCase() || eventResult.eventName,
         },
       }
     );

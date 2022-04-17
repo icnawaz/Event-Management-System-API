@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A web app that registers, login users who can create, share and update events",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "nawaz",
   "license": "ISC",
