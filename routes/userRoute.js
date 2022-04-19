@@ -13,9 +13,16 @@ const { verifyAccessToken, verifyPassToken } = require('../helpers/jwtHelper');
 
 const router = express.Router();
 
+const limter = require('express-rate-limit');
+
+const loginLimiter = limter({
+  windowMs: 1 * 60 * 1000,
+  max: 10,
+});
+
 router.post('/register', userRegister);
 
-router.post('/login', userLogin);
+router.post('/login', loginLimiter, userLogin);
 
 router.post('/logout', verifyAccessToken, userLogout);
 
