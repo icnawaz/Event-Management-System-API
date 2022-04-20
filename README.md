@@ -1,5 +1,5 @@
 # Event-Management-System-API
-Event management which involes CRUD operation with authentication and authorization
+Event management which involves CRUD operation with authentication and authorization
 
 USER :
 - Register User
