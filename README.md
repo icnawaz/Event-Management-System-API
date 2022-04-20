@@ -4,6 +4,7 @@ Event management which involves CRUD operation with authentication and authoriza
 USER :
 - Register User
 - Login / Logout User
+- Prevents Brute Force attacks
 - Change Password, Reset and Update Password
 
 EVENT : 
